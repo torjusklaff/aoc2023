@@ -1,5 +1,5 @@
 import pathlib
-from Tools.common import readlinesfromfile
+from Tools.common import readlinesfromfile, s_to_pos_list, s_to_int_list
 filepath = pathlib.Path(__file__).parent.resolve()
 
 def do(input):

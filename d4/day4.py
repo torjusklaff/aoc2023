@@ -14,9 +14,8 @@ def do(input):
         own = re.findall(r'\d+', own)
         same = [x for x in own if x in win]
         if len(same) > 0:
-            for y in range(num_cards[c]):
-                for x in range(c+1,c+1+len(same)):
-                    num_cards[x] += 1
+            for x in range(c+1,c+1+len(same)):
+                num_cards[x] += num_cards[c]
             total += 2**(len(same)-1)
     print("Part 1: ")
     print (total)

@@ -45,16 +45,17 @@ def do(input):
             for rn, cn in around:
                 if rows[rn][cn] != '.' and rows[rn][cn] not in digits:
                     total += int(num)
-                    if int(num) > 999:
-                        print("fuckoff")
                     break
+
+            #stupid workaround to get index to work
             row = list(row)
             for s in range(ind,ind+l):
-                row[s] = '.'
+                row[s] = '.' 
             sr = ''
             for s in row:
                 sr+=s
             row = sr
+            
             totall += int(num)
 
     tot2 = 0
