@@ -4,6 +4,11 @@ def readlinesfromfile(file):
         r = f.readlines()
     return r
 
+def readfile(file):
+    with open(file) as f:
+        r = f.read()
+    return r
+
 def s_to_pos_list(s):
     return re.findall(r'\d+', s)
 def s_to_int_list(s):
