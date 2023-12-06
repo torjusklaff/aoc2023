@@ -32,8 +32,8 @@ def do(input):
     
     print(min(locs))
     import time
-    now = time.time()
     print("Part 2 the right way")
+    now = time.time()
     seeds = [(seed, seed + seeds[seeds.index(seed) + 1] ) for seed in seeds[::2]]
     ranges = []
     lowest = max(locs)
@@ -44,26 +44,30 @@ def do(input):
         ranges.append(x)
         for step in stepsecs.keys():
             new_ranges = []
-            for r in ranges:
-                matched_ranges = []
-                for m in stepsecs[step]:
-                    curr, prev, ran = m
-                    y = (prev, prev + ran)
-                    z = (max(r[0], y[0]), min(r[1], y[1]))
-                    if z[1] > z[0]:
-                        #we have intersection
-                        new_ranges.append((z[0] - prev + curr,z[1] - prev + curr))
-                        matched_ranges.append((z[0], z[1]))
-                
-                if len(matched_ranges) == 0:
-                    new_ranges.append(r)
+            for ra in ranges:
+                rb = [ra]
+                while(rb):
+                    matched = False
+                    for m in stepsecs[step]:
+                        if rb:
+                            r = rb[0]
+                            curr, prev, ran = m
+                            y = (prev, prev + ran)
+                            z = (max(r[0], y[0]), min(r[1], y[1]))
+                            if z[1] > z[0]:
+                                #we have intersection
+                                new_ranges.append((z[0] - prev + curr,z[1] - prev + curr))
+                                matched = True
+                                if z[1] < r[1]:
+                                    rb.append((z[1] + 1, r[1]))
+                                if z[0] > r[0]:
+                                    rb.append((r[0], z[0] - 1))
+                                rb.pop(0)
+                    if not matched:
+                        for r in rb:
+                            new_ranges.append(r)
+                        rb = []
 
-                # elif sum([len(m) for m in matched_ranges]) < len(r):
-                #     for z in matched_ranges:
-                #         if z[0] > r[0]:
-                #             new_ranges.append((r[0], z[0]))
-                #         if z[-1] < r[1]:
-                #             new_ranges.append(range(z[-1] + 1, r[-1] + 1))
 
             ranges = new_ranges
         for ra in ranges:
