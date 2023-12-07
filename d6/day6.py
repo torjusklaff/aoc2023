@@ -16,15 +16,25 @@ def do(input):
     dis1 = [int(x) for x in dis]
 
     ans1 = 1
+    ans1_opt = 1
+    v1_start = time.time()
     for i, x in enumerate(times1):
         wins = 0
+
         for s in range(x+1):
             if s*(x-s) > dis1[i]:
                 wins += 1
         ans1 *= wins
-        
+    v1_end = time.time()
+    v2_start = time.time()
+    
+    for i, x in enumerate(times1):
+        s1 = x/2 + sqrt(x**2 - 4*dis1[i]) / 2
+        s2 = x/2 - sqrt(x**2 - 4*dis1[i]) / 2 
+        ans1_opt *= floor(max(s1,s2) - 0.00001) - ceil(min(s1, s2) + 0.00001) + 1
 
-
+    v2_end = time.time()
+    print(v1_end - v1_start, v2_end - v2_start)
 
     times2 = ''
     for x in times: times2 += x
@@ -34,16 +44,16 @@ def do(input):
     for x in dis: dis2 += x
     dis2 = int(dis2)
 
-    wins = 0
 
     s1 = times2/2 + sqrt(times2**2 - 4*dis2) / 2
     s2 = times2/2 - sqrt(times2**2 - 4*dis2) / 2
     
-    ans2 = floor(max(s1,s2)) - ceil(min(s1, s2)) + 1
+    ans2 = floor(max(s1,s2) - 0.00001) - ceil(min(s1, s2) + 0.00001) + 1
 
 
     # Got my answer with this
-
+    
+    # wins = 0
     # for s in range(times2 + 1):
     #     if s*(times2-s) > dis2:
     #         wins += 1
