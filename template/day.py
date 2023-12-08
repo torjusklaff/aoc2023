@@ -23,11 +23,14 @@ def do(input):
     return
 
 def main():
+    print()
+    print("Day: ")
     print("Example: ")
     do(readlinesfromfile(str(filepath)+"/example.txt"))
     print()
     print("Input: ")
     do(readlinesfromfile(str(filepath)+"/input.txt"))
+    print()
 
 if __name__=="__main__":
     main()

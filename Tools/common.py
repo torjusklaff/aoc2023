@@ -1,8 +1,8 @@
 import re
 def readlinesfromfile(file):
     with open(file) as f:
-        r = f.readlines()
-    return r
+        r = f.read()
+    return r.splitlines()
 
 def readfile(file):
     with open(file) as f:
