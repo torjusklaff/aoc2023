@@ -3,6 +3,7 @@ from Tools.common import readlinesfromfile, s_to_pos_list, s_to_int_list
 filepath = pathlib.Path(__file__).parent.resolve()
 import time
 import copy
+
 def do(input):
     code_start_time = time.time()
 
@@ -43,12 +44,16 @@ def do(input):
     rate = 1
     for rank in ranks:
         if rank in classes.keys():
-            rcards = copy.deepcopy(classes[rank])
-
+            rcards = [ x[0] for x in classes[rank]]
+            bet = [ x[1] for x in classes[rank]]
+            rcards = classes[rank]
+            # Lambda function 
+            r = sorted(rcards, key=lambda value: value[0]) # [card_types.index(i) for i in value[0]])
+            rcards = classes[rank]
             for n in range(1, len(rcards)):
-                s = copy.deepcopy(rcards[n])
+                s = rcards[n]
                 for m in range(n-1, -1, -1):
-                    c = copy.deepcopy(rcards[m])
+                    c = rcards[m]
                     for i in range(5):
                         if card_types.index(s[0][i]) < card_types.index(c[0][i]):
                             rcards[m + 1] = c
@@ -115,13 +120,14 @@ def do(input):
     rate = 1
     for rank in ranks:
         if rank in classes.keys():
-            rcards = copy.deepcopy(classes[rank])
+
+            r = sorted(rcards, key=lambda value: [card_types.index(i) for i in value[0]])
 
             # Stupid ass insertion sort, oh well
             for n in range(1, len(rcards)):
-                s = copy.deepcopy(rcards[n])
+                s = rcards[n]
                 for m in range(n-1, -1, -1):
-                    c = copy.deepcopy(rcards[m])
+                    c = rcards[m]
                     for i in range(5):
                         if card_types.index(s[0][i]) < card_types.index(c[0][i]):
                             rcards[m + 1] = c
