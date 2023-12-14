@@ -3,8 +3,11 @@ from Tools.common import readlinesfromfile, s_to_pos_list, s_to_int_list
 filepath = pathlib.Path(__file__).parent.resolve()
 import time
 
+day = 
+
 def do(input):
     code_start_time = time.time()
+
 
     ans1 = 0
     ans2 = 0
@@ -24,7 +27,7 @@ def do(input):
 
 def main():
     print()
-    print("Day: ")
+    print("Day: ", day)
     print("Example: ")
     do(readlinesfromfile(str(filepath)+"/example.txt"))
     print()

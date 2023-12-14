@@ -122,7 +122,7 @@ def do(input):
 
 def main():
     print()
-    print("Day: ")
+    print("Day: 14")
     print("Example: ")
     do(readlinesfromfile(str(filepath)+"/example.txt"))
     print()
