@@ -6,6 +6,32 @@ import time
 from functools import cache
 day = 12
 
+
+@cache
+def solve(parts, numbers, ans=0):
+    if parts.count("#") + parts.count("?") < sum(numbers):
+        return 0
+    if parts[0] == '#':
+        r = parts[:numbers[0]]
+        if '.' in r:
+            return 0
+        else:
+            if len(numbers) == 1:
+                if len(r) >= numbers[0] and parts[numbers[0]:].count('#') == 0:
+                    return 1
+            elif parts[numbers[0]] != '#':
+                ans += solve(parts=parts[numbers[0]+1:], numbers=numbers[1:], ans=ans)
+            else:
+                return 0
+        
+    elif parts[0] == '?':
+        p1 = parts[1:]
+        p2 = '#' + parts[1:]
+        ans += solve(p1, numbers,ans) + solve(p2, numbers, ans)
+    else:
+        ans += solve(parts[1:], numbers, ans)      
+    return ans
+
 def do(input):
     code_start_time = time.time()
     
@@ -18,14 +44,19 @@ def do(input):
         parts, number = line.split()
         numbers = [int(x) for x in number.split(',')]
         numbers2 = numbers*5
-        parts2 = "?".join(parts*5) # parts + "?" + parts + "?" + parts + "?" + parts + "?" + parts 
+        parts2 = "?".join([parts]*5)
         pattern = []
+        ans1 += solve(parts, tuple(numbers))
+        ans2 += solve(parts2, tuple(numbers2))
+
+        if True: 
+            continue
+
         # Fill in first? 
         for n in numbers:
             p = "#"*n
             pattern.append(p)
-
-        # 16384 = 2^14
+        
         pot = parts.count('?')
         missing = sum(numbers) - parts.count("#")
 
@@ -54,12 +85,10 @@ def do(input):
             series = [x for x in first.split(".") if x]
             if series == pattern:
                 nfirst += 1
-                ans1 += 1
                 if first[-1] == "#":
                     last_working += 1
             i += 1
 
-    # > 7998120900078
     # Part 2
         if nfirst == last_working:
             ans2 += nfirst**5
