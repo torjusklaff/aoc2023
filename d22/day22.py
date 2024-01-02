@@ -85,12 +85,17 @@ def do(input):
         supports_is = set()
         supported_by_is = set()
         for j, br in bricks.items():
+            if not supports and not supported:
+                break
             for a in supports:
                 if a in br:
                     supports_is.add(j)
+                    supports.remove(a)
+
             for b in supported:
                 if b in br:
                     supported_by_is.add(j)
+                    supported.remove(b)
         brick_supports[i] = supports_is
         brick_supported_by[i] = supported_by_is
         
