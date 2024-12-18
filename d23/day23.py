@@ -65,12 +65,16 @@ def do(input):
     end_step = []
     while q:
         time_start = time.time()
-        for ind, path in enumerate(q):
+        path = q.pop()
+        p_steps = 0
+        n_steps, crossroads = path
+        curr, d = crossroads[-1]
+        crs = [x[0] for x in crossroads]
+        while curr != end:
             p_steps = 0
             n_steps, crossroads = path
             curr, d = crossroads[-1]
             crs = [x[0] for x in crossroads]
-
             if end_step and curr == end_step[0][0]:
                 d = end_step[0][1]
 
@@ -119,13 +123,14 @@ def do(input):
                                 pos.append((ds[dub],nb))
 
             if len(pos) == 0:
-                line = q.pop(ind)
+                line = path
                 if curr == end:
                     tree_dists[crossroads[-1]] = (p_steps, curr)
                     end_step = [crossroads[-1]]
                     if n_steps > ans2:
                         ans2 = n_steps
                         longest_route = line
+                break
 
             else:
                 if crossroads[-1] not in tree_dists.keys():
@@ -139,7 +144,7 @@ def do(input):
                     tree_dists[(curr,pd)] = (p_steps,crossroads[-1][0])
 
                 crossroads.append((curr,pos[0][0]))
-                q[ind] = [n_steps, crossroads]
+                path = [n_steps, crossroads]
                 for p in pos[1:]:
                     cr = [a for a in crossroads[:-1]]
                     cr.append((curr,p[0]))

@@ -50,8 +50,9 @@ def do(input):
     visited[r][c] = True
     rmax = len(visited)
     cmax = len(visited[0])
-    q = set([start])
-    for steps in range(64):
+    starts = [start,(0,cmax//2),(rmax-1,cmax//2),(rmax//2,0),(rmax//2,cmax-1), (0,0), (0,cmax-1),(rmax-1,0), (rmax-1,cmax-1)]
+    q = set([starts[8]])
+    for steps in range(196):
         nq = set()
         for s in q:
             r,c = s
@@ -77,7 +78,7 @@ def do(input):
     
     starts = [start,(0,cmax//2),(rmax-1,cmax//2),(rmax//2,0),(rmax//2,cmax-1), (0,0), (0,cmax-1),(rmax-1,0), (rmax-1,cmax-1)]
     filled_per_step_per_start = {start: defaultdict(int) for start in starts}
-    q = set([start])
+    q = set([starts[4]])
     filled_per_step = defaultdict(int)
     step = 1
     for step in range(1,start[0]+rmax*2+2):
@@ -122,6 +123,7 @@ def do(input):
     a2,b2,c2 = (start[0]+rmax)**2,start[0]+rmax,-filled_per_step[start[0]+rmax]
     a3,b3,c3 = (start[0]+2*rmax)**2,start[0]+2*rmax,-filled_per_step[start[0]+2*rmax]
     a4,b4 = 26501365**2,26501365 
+    return
     import sympy
     a,b,c,an2 = sympy.symbols('a b c an2')
     ans = sympy.linsolve([a*a1 + b*b1 + c + c1, \
@@ -178,7 +180,7 @@ def do(input):
                     
                 q = nq
             steps_per_start.append(len(q))
-        # 778064728020200 too high 614863076637600 too low, not 614864596322712
+        # 778064728020200 too high 614863076637600 too low, not 614864596322712 correct 614864614526014
         ans2 = full_blocks*len(vis)
         half_blocks = 2*(cyc_its+1) - 4
         halfblocks2 = (cyc_its + 1)*2 + 2*sum(range(cyc_its+1)) - full_blocks - 4
